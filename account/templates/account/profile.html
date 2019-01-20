@@ -1,0 +1,54 @@
+{% extends "account/base.html" %}
+{% block title %}{{user.name}} {{user.first_name}}'s Profile{% endblock %}
+{% block content %}
+	<div class="container">
+    	<div class="row mypadding">
+    		<div class="col-lg-3">
+    			<table class="table table-bordered">
+    				<thead>
+    					<tr>
+    						<th>Name</th>
+    						<th>First name</th>
+    						<th>Email address</th>
+    					</tr>
+    				</thead>
+    				<tr>
+    					<td>{{user.name}}</td>
+    					<td>{{user.first_name}}</td>
+    					<td>{{user.email_address}}</td>
+    				</tr>
+    			</table>
+    		</div>
+    	</div>
+    	<div class="row mypadding">
+    		<div class="col-lg-1">
+    			<button id="edit" type="button" class="btn btn-primary" data-toggle="modal" data-target="#mymodal">Edit</button>
+    		</div>
+    	</div>
+    	<!-- Modal -->
+    	<div class="modal fade" id="mymodal" tabindex="-1" role="dialog" aria-labelledby="mymodal" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<form id="email_edit_form" method="post" class="form" role="form" action="{% url 'edit_email' user.id %}">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title">Edit email address</h4>
+						</div>
+						<div class="modal-body">				
+							{% csrf_token %}
+							{{ form.non_field_errors }}
+							<div class="form-group">
+								<label for="email_address" class="control-label">New email address:</label>
+								<input type="text" class="form-control" id="email_address" name="email_address">
+							</div>
+						</div>
+						<div class="modal-footer">
+							<input type="button" class="btn btn-default" data-dismiss="modal" value="cancel" />
+		                	<input type="submit" name="save" class="btn btn-primary" value="save" style="margin-bottom: 5px;" />
+						</div>
+					</form>
+				</div>		 
+			</div>
+		</div><!-- Modal end -->
+    </div>
+{% endblock %}
